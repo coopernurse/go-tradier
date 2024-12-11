@@ -482,8 +482,8 @@ func (tc *Client) GetOptionChain(symbol string, expiration time.Time) ([]*Quote,
 	return result.Options.Option, err
 }
 
-func (tc *Client) GetQuotes(symbols []string) ([]*Quote, error) {
-	url := tc.endpoint + "/v1/markets/quotes?symbols=" + strings.Join(symbols, ",")
+func (tc *Client) GetQuotes(symbols []string, greeks bool) ([]*Quote, error) {
+	url := fmt.Sprintf("%s/v1/markets/quotes?greeks=%v&symbols=%s", tc.endpoint, greeks, strings.Join(symbols, ","))
 	var result struct {
 		Quotes struct {
 			Quote []*Quote
